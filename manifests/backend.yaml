@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  ports:
+  - port: 5050
+    targetPort: 5050
+    protocol: TCP
+  selector:
+    app: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: backendregistrylearnon.azurecr.io/learnon:latest
+        imagePullPolicy: Always
+        env:
+          - name: DEFAULT_CONNECTION
+            value: Server=learnon-server.postgres.database.azure.com;Database=learnon-db;Port=5432;User Id=adminTerraform;Password=admin1234
+          - name: CORS_ORIGINS
+            value: workshop
+        resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "512Mi"
+              cpu: "400m"
+        ports:
+        - containerPort: 5050
