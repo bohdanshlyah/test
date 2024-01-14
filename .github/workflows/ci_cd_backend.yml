@@ -50,7 +50,7 @@ jobs:
         - uses: Azure/k8s-deploy@v1
           with:
             manifests: |
-              manifests/backend.yaml
+              backend.yaml
             images: |
               ${{ secrets.REGISTRY_LOGIN_SERVER }}/learnon:${{ github.sha }}
             imagepullsecrets: |
