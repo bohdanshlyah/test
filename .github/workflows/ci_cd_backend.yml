@@ -32,7 +32,9 @@ jobs:
         runs-on: ubuntu-latest
         needs: [ build ]
         steps:
-
+        
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@main
         # Set the target AKS cluster.
         - uses: Azure/aks-set-context@v1
           with:
